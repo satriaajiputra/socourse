@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class MainFrame extends javax.swing.JFrame {
 
     private static String username;
-    private ArrayList<JPanel> menus = new ArrayList<>();
+    private JPanel menu = null;
     private Color primaryColor = new Color(0,102,255);
     private Color primaryColorHover = new Color(108,163,247);
 
@@ -27,26 +27,13 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         this.username = username;
         labelUsername.setText(username);
-        setMenus();
         initHome();
     }
-    
-    private void resetActiveMenu() {
-        menus.forEach(menu -> menu.setBackground(primaryColor));
-    }
-    
+
     private void setActiveMenu(JPanel menu) {
-        resetActiveMenu();
+        if(this.menu != null) this.menu.setBackground(primaryColor);
         menu.setBackground(primaryColorHover);
-    }
-    
-    private void setMenus() {
-        menus.add(btnHome);
-        menus.add(btnCourse);
-        menus.add(btnExercise);
-        menus.add(btnResources);
-        menus.add(btnAbout);
-        menus.add(btnSignOut);
+        this.menu = menu;
     }
     
     private void initHome() {
@@ -62,6 +49,12 @@ public class MainFrame extends javax.swing.JFrame {
         parentPanel.add(panel);
         parentPanel.repaint();
         parentPanel.revalidate();
+    }
+    
+    private void changePage(String title, JPanel btn, JPanel panel) {
+        labelPageTitle.setText(title);
+        setActiveMenu(btn);
+        setActivePanel(panelContent, panel);
     }
 
     /**
@@ -698,27 +691,19 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseClicked
-        labelPageTitle.setText("Home");
-        setActiveMenu(btnHome);
-        setActivePanel(panelContent, panelHome);
+        changePage("Home", btnHome, panelHome);
     }//GEN-LAST:event_btnHomeMouseClicked
 
     private void btnCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCourseMouseClicked
-        labelPageTitle.setText("Course");
-        setActiveMenu(btnCourse);
-        setActivePanel(panelContent, panelCourse);
+        changePage("Course", btnCourse, panelCourse);
     }//GEN-LAST:event_btnCourseMouseClicked
 
     private void btnExerciseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExerciseMouseClicked
-        labelPageTitle.setText("Exercise");
-        setActiveMenu(btnExercise);
-        setActivePanel(panelContent, panelExercise);
+        changePage("Exercise", btnExercise, panelExercise);
     }//GEN-LAST:event_btnExerciseMouseClicked
 
     private void btnResourcesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResourcesMouseClicked
-        labelPageTitle.setText("Resources");
-        setActiveMenu(btnResources);
-        setActivePanel(panelContent, panelResources);
+        changePage("Resources", btnResources, panelResources);
     }//GEN-LAST:event_btnResourcesMouseClicked
 
     private void btnAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAboutMouseClicked
